@@ -1,0 +1,18 @@
+# Streamlit chrome, matched to the Sanad palette defined in src/sanad/config.py.
+# Keeping the framework's own widgets on-brand means the stylesheet only has to
+# handle layout and direction, never colour correction.
+
+[theme]
+base = "light"
+primaryColor = "#0E3B33"
+backgroundColor = "#F4F6F5"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#0B1F1C"
+
+[server]
+# Uploads are held in memory for the session only; the ceiling matches
+# SANAD_MAX_UPLOAD_MB so the framework and the app agree on the limit.
+maxUploadSize = 50
+
+[browser]
+gatherUsageStats = false

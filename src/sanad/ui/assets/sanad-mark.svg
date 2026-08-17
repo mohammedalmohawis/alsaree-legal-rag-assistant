@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Sanad">
+  <title>Sanad</title>
+  <!-- The page: every answer Sanad gives comes from a document. -->
+  <path d="M12 9a4 4 0 0 1 4-4h22l14 14v36a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4z" fill="#0E3B33"/>
+  <path d="M38 5l14 14H42a4 4 0 0 1-4-4z" fill="#14544A"/>
+  <!-- The balance: weighing what the document actually says. -->
+  <g stroke="#B07D46" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M32 27v20"/>
+    <path d="M21 31h22"/>
+    <path d="M25 48h14"/>
+    <path d="M16 31l5 9 5-9"/>
+    <path d="M38 31l5 9 5-9"/>
+  </g>
+  <circle cx="32" cy="27" r="2.4" fill="#B07D46"/>
+</svg>
