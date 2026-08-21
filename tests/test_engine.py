@@ -75,7 +75,7 @@ class TestAnswering:
         assert result.citations[0].filename == "Employment Contract.pdf"
         assert result.citations[0].page_start is not None
 
-    def test_strips_a_fabricated_citation(self, app_settings, library) -> None:
+    def test_strips_a_fabricated_citation_and_fails_closed(self, app_settings, library) -> None:
         transport = FakeTransport(text_reply="The fee is SAR 99,000 [S42].")
         engine = build_engine(app_settings, transport)
         engine.build_index(library)
@@ -84,6 +84,34 @@ class TestAnswering:
 
         assert "[S42]" not in result.answer
         assert result.citations == []
+        assert result.grounded is False
+        assert result.answer == NOT_FOUND_MESSAGE["en"]
+
+    def test_substantive_answer_without_any_marker_fails_closed(
+        self, app_settings, library
+    ) -> None:
+        transport = FakeTransport(text_reply="The notice period is sixty days.")
+        engine = build_engine(app_settings, transport)
+        engine.build_index(library)
+
+        result = engine.answer("What is the notice period?")
+
+        assert result.grounded is False
+        assert result.citations == []
+        assert result.answer == NOT_FOUND_MESSAGE["en"]
+
+    def test_fail_closed_uses_arabic_refusal_for_arabic_question(
+        self, app_settings, library
+    ) -> None:
+        transport = FakeTransport(text_reply="مدة الإشعار ستون يوماً.")
+        engine = build_engine(app_settings, transport)
+        engine.build_index(library)
+
+        result = engine.answer("ما مدة الإشعار؟")
+
+        assert result.grounded is False
+        assert result.citations == []
+        assert result.answer == NOT_FOUND_MESSAGE["ar"]
 
     def test_detects_the_refusal_and_reports_no_sources(self, app_settings, library) -> None:
         transport = FakeTransport(text_reply=NOT_FOUND_MESSAGE["en"])

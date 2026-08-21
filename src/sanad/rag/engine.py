@@ -213,6 +213,15 @@ class RagEngine:
 
         cleaned, used = verify_markers(raw, citations)
         grounded = not is_not_found(cleaned)
+
+        # Fail closed: a substantive answer with no valid citations is
+        # unsupported and must not be shown as grounded.
+        if grounded and not used:
+            cleaned = prompts.NOT_FOUND_MESSAGE.get(
+                resolved, prompts.NOT_FOUND_MESSAGE["en"]
+            )
+            grounded = False
+
         return AnswerResult(
             question=question,
             answer=cleaned,
